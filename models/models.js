@@ -30,8 +30,8 @@ const Schedule = sequelize.define('schedule', {
 Operator.hasMany(Playlist)
 Playlist.belongsTo(Operator)
 
-Playlist.belongsToMany(Devices, { through: Schedule, as: 'PlaylistInSchedule', foreignKey: 'playlistId' })
-Devices.belongsToMany(Playlist, { through: Schedule, as: 'DevicesInSchedule', foreignKey: 'devicesId' })
+Playlist.belongsToMany(Devices, { through: Schedule, foreignKey: 'playlistId' })
+Devices.belongsToMany(Playlist, { through: Schedule,foreignKey: 'devicesId' })
 
 module.exports = {
     Operator,
