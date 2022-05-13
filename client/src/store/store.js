@@ -7,11 +7,11 @@ import deviceReducer from './reducers/deviceReducer'
 import playlistReducer from './reducers/playlistReducer'
 
 const rootReducer = combineReducers({
-  authReducer,
-  cabinetReducer,
-  operatorReducer,
-  deviceReducer,
-  playlistReducer
+    authReducer,
+    cabinetReducer,
+    operatorReducer,
+    deviceReducer,
+    playlistReducer
 })
 
 const store = createStore(rootReducer, compose(
