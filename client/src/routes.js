@@ -5,6 +5,8 @@ import { Sidebar } from "./components/Sidebar"
 
 import { CabinetPage } from "./pages/Cabinet/CabinetPage"
 import { OperatorsPage } from "./pages/Operators/OperatorsPage"
+import { DevicesPage } from "./pages/Devices/DevicesPage"
+import { PlaylistsPage } from "./pages/Playlists/PlaylistPage"
 
 export const useRoutes = (isAuthenticated) => {
 
@@ -28,6 +30,8 @@ export const useRoutes = (isAuthenticated) => {
                     <Route path="/">
                         <Route path="*" element={<CabinetPage />} />
                         <Route path="operators" element={<OperatorsPage />} />
+                        <Route path="devices" element={<DevicesPage />} />
+                        <Route path="playlists" element={<PlaylistsPage />} />
                     </Route>
                 </Routes>
                 
