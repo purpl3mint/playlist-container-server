@@ -3,7 +3,12 @@ import {
     DEVICE_SET_DEVICES,
     DEVICE_SET_PRELOADER,
     DEVICE_SET_ADD_FORM,
-    DEVICE_CLEAR_ADD_FORM
+    DEVICE_CLEAR_ADD_FORM,
+    DEVICE_SET_CHOSEN_GROUP,
+    DEVICE_SET_GROUP_SCHEDULE,
+    DEVICE_CLEAR_GROUP_SCHEDULE,
+    DEVICE_SET_GROUP_SCHEDULE_FORM,
+    DEVICE_CLEAR_GROUP_SCHEDULE_FORM
   } from "../actions/deviceActions"
   
   export function deviceSetSucceed(data){
@@ -90,3 +95,89 @@ import {
       dispatch(deviceSetPreloader(false))
     }
   }
+
+export function deviceSetChosenGroup(id) {
+  return {
+    type: DEVICE_SET_CHOSEN_GROUP,
+    data: id
+  }
+}
+
+export function deviceSetGroupSchedule(data) {
+  return {
+    type: DEVICE_SET_GROUP_SCHEDULE,
+    data
+  }
+}
+
+export function deviceClearGroupSchedule() {
+  return {
+    type: DEVICE_CLEAR_GROUP_SCHEDULE
+  }
+}
+
+export function deviceLoadGroupSchedule(id) {
+  return async(dispatch) => {
+    dispatch(deviceSetPreloader(true))
+
+    const method = 'GET'
+    const headers = {'Content-Type': 'application/json'}
+    const responce = await fetch("/api/devices/playlist/" + id, {method, headers})
+
+    const data = await responce.json()
+    if (responce.ok) {
+      dispatch(deviceSetGroupSchedule(data))
+    }
+
+    dispatch(deviceSetPreloader(false))
+  }
+}
+
+export function deviceDeleteGroupScheduleRecord(idGroup, idSchedule) {
+  return async(dispatch) => {
+    dispatch(deviceSetPreloader(true))
+
+    const method = 'DELETE'
+    const headers = {'Content-Type': 'application/json'}
+    const responce = await fetch("/api/devices/playlist/" + idGroup + "/" + idSchedule, {method, headers})
+
+    await responce.json()
+    if (responce.ok) {
+      deviceLoadGroupSchedule()
+    }
+
+    dispatch(deviceSetPreloader(false))
+  }
+}
+
+export function deviceSetGroupScheduleForm(name, value) {
+  return {
+    type: DEVICE_SET_GROUP_SCHEDULE_FORM,
+    data: {name, value}
+  }
+}
+
+export function deviceClearGroupScheduleForm () {
+  return {
+    type: DEVICE_CLEAR_GROUP_SCHEDULE_FORM
+  }
+}
+
+export function deviceAddGroupScheduleRecord(form) {
+  return async(dispatch) => {
+    dispatch(deviceSetPreloader(true))
+
+    const method = 'POST'
+    const headers = {'Content-Type': 'application/json'}
+    const body = JSON.stringify({...form})
+    const responce = await fetch("/api/devices/playlist/", {method, body, headers})
+
+    await responce.json()
+    if (responce.ok) {
+      deviceClearGroupScheduleForm()
+      deviceLoadGroupSchedule()
+    }
+
+    dispatch(deviceSetPreloader(false))
+  }
+}

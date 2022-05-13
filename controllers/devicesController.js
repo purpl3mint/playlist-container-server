@@ -59,7 +59,7 @@ class DevicesController {
     }
 
     async getPlaylistsForDevices(req, res, next) {
-        const {id} = req.body
+        const {id} = req.params
 
         const devices= await Devices.findByPk(id)
         const playlists = await devices.getPlaylists()

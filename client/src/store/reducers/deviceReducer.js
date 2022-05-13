@@ -3,7 +3,12 @@ import {
     DEVICE_SET_DEVICES,
     DEVICE_SET_PRELOADER,
     DEVICE_SET_ADD_FORM,
-    DEVICE_CLEAR_ADD_FORM
+    DEVICE_CLEAR_ADD_FORM,
+    DEVICE_SET_CHOSEN_GROUP,
+    DEVICE_SET_GROUP_SCHEDULE,
+    DEVICE_CLEAR_GROUP_SCHEDULE,
+    DEVICE_SET_GROUP_SCHEDULE_FORM,
+    DEVICE_CLEAR_GROUP_SCHEDULE_FORM
 } from "../actions/deviceActions"
   
 const initialState = {
@@ -14,6 +19,14 @@ const initialState = {
         name: "",
         url: ""
     },
+    chosenGroup: 0,
+    chosenGroupSchedule: [],
+    groupScheduleForm: {
+        idDevices: 0,
+        idPlaylist: 0,
+        timeStart: "00:00:00",
+        timeEnd: "00:00:00"
+    }
 }
   
 function deviceReducer (state = initialState, action) {
@@ -30,6 +43,18 @@ function deviceReducer (state = initialState, action) {
         }
         case DEVICE_CLEAR_ADD_FORM:
             return { ...state, addForm: initialState.addForm }
+        case DEVICE_SET_CHOSEN_GROUP:
+            return { ...state, chosenGroup: action.data }
+        case DEVICE_SET_GROUP_SCHEDULE:
+            return { ...state, chosenGroupSchedule: action.data }
+        case DEVICE_CLEAR_GROUP_SCHEDULE:
+            return { ...state, chosenGroupSchedule: initialState.chosenGroupSchedule }
+        case DEVICE_SET_GROUP_SCHEDULE_FORM: {
+            let newGroupScheduleForm = {...state.groupScheduleForm, [action.data.name]: action.data.value}
+            return { ...state, groupScheduleForm: newGroupScheduleForm }
+        }
+        case DEVICE_CLEAR_GROUP_SCHEDULE_FORM:
+            return { ...state, groupScheduleForm: initialState.groupScheduleForm }
     
         default: 
             return state
