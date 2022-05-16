@@ -3,7 +3,7 @@ import { Preloader } from "../../components/Preloader";
 import { useDispatch, useSelector } from 'react-redux';
 import { DeviceCard } from "./DeviceCard";
 import { AddDevice } from "./AddDevice";
-import { deviceLoadDevices, deviceSetChosenGroup, deviceSetSucceed } from "../../store/actionCreators/deviceActionCreator";
+import { deviceLoadDevices, deviceSetSucceed } from "../../store/actionCreators/deviceActionCreator";
 
 export const DevicesPage = () => {
     const dispatch = useDispatch()
@@ -12,7 +12,6 @@ export const DevicesPage = () => {
     const loading = useSelector(state => state.deviceReducer.preloader)
     const devices = useSelector(state => {
         const devicesRaw = state.deviceReducer.devices
-        console.log(devicesRaw);
         const devices = devicesRaw.map(d => 
           <DeviceCard name={d.name} url={d.url} id={d.id} key={d.id} />
         )
