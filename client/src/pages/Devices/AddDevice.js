@@ -1,17 +1,20 @@
 import './AddDevice.css'
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { deviceSetAddForm, deviceAdd } from "../../store/actionCreators/deviceActionCreator"
 import { useMessage } from '../../hooks/message.hook';
+import { PATH } from '../../utils/Config'
 
 export const AddDevice = (props) => {
   const dispatch = useDispatch()
   const message = useMessage()
   const form = useSelector(state => state.deviceReducer.addForm)
+  const basePath = PATH + '/api/show/'
 
   const changeHandler = useCallback( (e) => {
       dispatch(deviceSetAddForm(e.target.name, e.target.value))
-  }, [dispatch])
+      dispatch(deviceSetAddForm("url", basePath + e.target.value))
+  }, [dispatch, basePath])
 
   const createHandler = useCallback( () => {
       if (!form.name){
@@ -32,6 +35,11 @@ export const AddDevice = (props) => {
     props.onClose()
   }, [props])
 
+  const initializeHandler = useCallback(() => {
+    dispatch(deviceSetAddForm("url", basePath))
+  }, [dispatch, basePath])
+
+  useEffect(() => {initializeHandler()}, [initializeHandler])
 
   if (!props.show) {
     return null
@@ -54,8 +62,8 @@ export const AddDevice = (props) => {
 
           <div className="row">
             <div className="input-field col s6">
-              <input id="url" name="url" type="text" value={form.url} onChange={changeHandler} />
-              <span className="helper-text">Ссылка*</span>
+              <input id="url" name="url" type="text" value={form.url} onChange={changeHandler} disabled="true"/>
+              <span className="helper-text">Ссылка</span>
             </div>
           </div>
 

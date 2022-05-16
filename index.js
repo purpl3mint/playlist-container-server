@@ -19,12 +19,24 @@ app.use('/api', router)
 //Static files
 app.use("/stat", express.static(path.resolve(__dirname, 'static')))
 
+//For production environment
+if (process.env.NODE_ENV === 'production') {
+  app.use("/", express.static('client/build'));
+  app.get("/stat/:file", (req, res) => {
+    res.sendFile(path.join(__dirname + '/static/' + req.params.file));
+  })
+  app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  });
+
+}
+
 const PORT = config.get('port') || 8080
 
 
 app.get('/', (req, res) => {
     res.status(200).json({message: 'Hi'})
-  })
+})
 
 
 const seed = async () => {

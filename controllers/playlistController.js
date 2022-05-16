@@ -7,7 +7,7 @@ class PlaylistController {
     async create(req, res, next) {
         const {name} = req.body
         const {file} = req.files
-        const url = name + uuid.v4() + '.json'
+        const url = name + '-' + uuid.v4() + '.json'
         if (file) {
             file.mv(path.resolve(__dirname, '..', 'static', url))
         }

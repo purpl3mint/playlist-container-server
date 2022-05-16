@@ -72,8 +72,9 @@ import {
       const responce = await fetch("/api/devices", {method, body, headers})
   
       if (responce.ok) {
-        dispatch(deviceSetSucceed(true))
+        deviceLoadDevices()
         dispatch(deviceClearAddForm())
+        dispatch(deviceSetSucceed(true))
       }
   
       dispatch(deviceSetPreloader(false))
