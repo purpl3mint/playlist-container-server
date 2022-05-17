@@ -33,7 +33,17 @@ class PlaylistController {
     async delete(req, res, next) {
         const {id} = req.params
 
+        const playlist = await Playlist.findByPk(id)
+        const filename = playlist.url
+        const localPath = './static/' + filename
+
         const deletePlaylist = await Playlist.destroy({where: {id}})
+        unlink(localPath, (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+        })
 
         if (deletePlaylist)
             return res.json({message: "Плейлист успешно удален"})
