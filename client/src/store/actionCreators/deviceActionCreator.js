@@ -8,7 +8,8 @@ import {
     DEVICE_SET_GROUP_SCHEDULE,
     DEVICE_CLEAR_GROUP_SCHEDULE,
     DEVICE_SET_GROUP_SCHEDULE_FORM,
-    DEVICE_CLEAR_GROUP_SCHEDULE_FORM
+    DEVICE_CLEAR_GROUP_SCHEDULE_FORM,
+    DEVICE_SET_PLAYLISTS
   } from "../actions/deviceActions"
   
   export function deviceSetSucceed(data){
@@ -178,6 +179,36 @@ export function deviceAddGroupScheduleRecord(form) {
       deviceClearGroupScheduleForm()
       deviceLoadGroupSchedule()
     }
+
+    dispatch(deviceSetPreloader(false))
+  }
+}
+
+export function deviceSetPlaylists(playlists) {
+  return {
+    type: DEVICE_SET_PLAYLISTS,
+    playlists
+  }
+}
+
+export function deviceLoadPlaylists() {
+  return async(dispatch) => {
+    dispatch(deviceSetPreloader(true))
+
+    /*
+    const method = 'GET'
+    const headers = {'Content-Type': 'application/json'}
+    */
+   
+    /* WTF */
+    //const responce = await fetch("/api/playlist/", {method, headers})
+
+    /*
+    const data = await responce.json()
+    if (responce.ok) {
+      dispatch(deviceSetPlaylists(data))
+    }
+    */
 
     dispatch(deviceSetPreloader(false))
   }

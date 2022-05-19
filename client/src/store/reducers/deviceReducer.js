@@ -8,7 +8,8 @@ import {
     DEVICE_SET_GROUP_SCHEDULE,
     DEVICE_CLEAR_GROUP_SCHEDULE,
     DEVICE_SET_GROUP_SCHEDULE_FORM,
-    DEVICE_CLEAR_GROUP_SCHEDULE_FORM
+    DEVICE_CLEAR_GROUP_SCHEDULE_FORM,
+    DEVICE_SET_PLAYLISTS,
 } from "../actions/deviceActions"
   
 const initialState = {
@@ -23,10 +24,11 @@ const initialState = {
     chosenGroupSchedule: [],
     groupScheduleForm: {
         idDevices: 0,
-        idPlaylist: 0,
+        idPlaylist: -1,
         timeStart: "00:00:00",
         timeEnd: "00:00:00"
-    }
+    },
+    playlists: []
 }
   
 function deviceReducer (state = initialState, action) {
@@ -55,6 +57,8 @@ function deviceReducer (state = initialState, action) {
         }
         case DEVICE_CLEAR_GROUP_SCHEDULE_FORM:
             return { ...state, groupScheduleForm: initialState.groupScheduleForm }
+        case DEVICE_SET_PLAYLISTS:
+            return { ...state, playlists: action.playlists}
     
         default: 
             return state

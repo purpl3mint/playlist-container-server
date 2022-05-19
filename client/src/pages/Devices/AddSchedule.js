@@ -3,12 +3,24 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { deviceSetGroupScheduleForm, deviceAddGroupScheduleRecord, deviceClearGroupScheduleForm } from "../../store/actionCreators/deviceActionCreator"
 import { useMessage } from '../../hooks/message.hook';
+import { playlistLoadPlaylists } from '../../store/actionCreators/playlistActionCreator';
 
 export const AddSchedule = (props) => {
-    const {chosenGroup} = props
+  const {chosenGroup, } = props
   const dispatch = useDispatch()
   const message = useMessage()
   const form = useSelector(state => state.deviceReducer.groupScheduleForm)
+  const schedules = useSelector(state => state.deviceReducer.chosenGroupSchedule)
+
+  const playlists = useSelector(state => {
+    const rawPlaylists = state.playlistReducer.playlists
+    const result = rawPlaylists.map(item => 
+      <option value={item.id} key={item.id}>
+        {item.name}
+      </option>)
+
+    return result
+  })
 
   const changeHandler = useCallback( (e) => {
       dispatch(deviceSetGroupScheduleForm(e.target.name, e.target.value))
@@ -24,17 +36,26 @@ export const AddSchedule = (props) => {
           return
       }
 
+      for(let i = 0; i < schedules.length; i++) {
+        if (schedules[i].id === form.idPlaylist - 0) {
+          message("Ошибка: плейлист уже задействован")
+          return
+        }
+      }
+      
+
       dispatch(deviceAddGroupScheduleRecord(form))
       dispatch(deviceClearGroupScheduleForm())
 
       props.onCreate()
-  }, [dispatch, form, props, message])
+  }, [dispatch, form, props, schedules, message])
 
   const closeHandler = useCallback( () => {
     props.onClose()
   }, [props])
 
   const initializeHandler = useCallback(() => {
+    dispatch(playlistLoadPlaylists())
     dispatch(deviceSetGroupScheduleForm("idDevices", chosenGroup))
   }, [dispatch, chosenGroup])
 
@@ -53,10 +74,10 @@ export const AddSchedule = (props) => {
         <div className="col s12">
 
           <div className="row">
-            <div className="input-field col s6">
-              <input id="idPlaylist" name="idPlaylist" type="text" value={form.idPlaylist} onChange={changeHandler} />
-              <span className="helper-text">ID плейлиста*</span>
-            </div>
+            <select className="col s10 browser-default" name="idPlaylist" value={form.idPlaylist} onChange={changeHandler}>
+              <option value="-1" disabled>Выберите плейлист (по умолчанию offline)</option>
+              { playlists }
+            </select>
           </div>
 
           <div className="row">
