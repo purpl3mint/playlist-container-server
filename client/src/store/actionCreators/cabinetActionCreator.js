@@ -30,7 +30,6 @@ export function cabinetChangePassword(form) {
     const method = 'PUT'
     const headers = {'Content-Type': 'application/json'}
     const body = JSON.stringify({...form})
-    console.log(body);
     const responce = await fetch("/api/operator/setpassword", {method, body, headers})
   
     if (responce.ok) {
