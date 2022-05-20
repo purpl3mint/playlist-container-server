@@ -53,7 +53,7 @@ export const DevicesGroupPage = () => {
 
 
     return (
-        <div className="row">
+        <div className="col s9">
             <h1>Группа устройств: {(chosenGroupData && chosenGroupData.name) || chosenGroup || "неизвестно"}</h1>
 
             {loading && <Preloader />}

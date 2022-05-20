@@ -12,7 +12,7 @@ export const DeviceCard = (props) => {
   }, [dispatch, id])
 
   return (
-    <div className="row" style={{marginLeft: "2px"}}>
+    <div className="row">
       <div className="col s10">
         <NavLink
           to={"" + id}
