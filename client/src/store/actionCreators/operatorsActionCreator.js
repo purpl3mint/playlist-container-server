@@ -67,6 +67,7 @@ import {
       const responce = await fetch("/api/operator/registration", {method, body, headers})
   
       if (responce.ok) {
+        dispatch(operatorLoadOperators())
         dispatch(operatorSetSucceed(true))
         dispatch(operatorClearAddForm())
       }

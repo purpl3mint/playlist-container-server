@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 import { useDispatch } from "react-redux"
-import { deviceDeleteGroupScheduleRecord } from "../../store/actionCreators/deviceActionCreator"
+import { deviceDeleteGroupScheduleRecord, deviceLoadGroupSchedule } from "../../store/actionCreators/deviceActionCreator"
 
 export const ScheduleCard = (props) => {
   const {name, idGroup, idSchedule, timeStart, timeEnd} = props
@@ -8,6 +8,7 @@ export const ScheduleCard = (props) => {
 
   const deleteHandler = useCallback(() => {
     dispatch(deviceDeleteGroupScheduleRecord(idGroup, idSchedule))
+    dispatch(deviceLoadGroupSchedule(idGroup))
   }, [dispatch, idGroup, idSchedule])
 
   return (

@@ -1,12 +1,12 @@
 import './AddDevice.css'
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { deviceSetGroupScheduleForm, deviceAddGroupScheduleRecord, deviceClearGroupScheduleForm } from "../../store/actionCreators/deviceActionCreator"
+import { deviceSetGroupScheduleForm, deviceAddGroupScheduleRecord, deviceClearGroupScheduleForm, deviceLoadGroupSchedule } from "../../store/actionCreators/deviceActionCreator"
 import { useMessage } from '../../hooks/message.hook';
 import { playlistLoadPlaylists } from '../../store/actionCreators/playlistActionCreator';
 
 export const AddSchedule = (props) => {
-  const {chosenGroup, } = props
+  const {chosenGroup} = props
   const dispatch = useDispatch()
   const message = useMessage()
   const form = useSelector(state => state.deviceReducer.groupScheduleForm)
@@ -43,9 +43,11 @@ export const AddSchedule = (props) => {
         }
       }
       
-
+      
       dispatch(deviceAddGroupScheduleRecord(form))
+      dispatch(deviceLoadGroupSchedule(form.idDevices))
       dispatch(deviceClearGroupScheduleForm())
+      
 
       props.onCreate()
   }, [dispatch, form, props, schedules, message])

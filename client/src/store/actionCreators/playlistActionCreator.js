@@ -71,12 +71,15 @@ export function playlistAdd(form){
 
         XHRRequest.onload = function() {
             if (XHRRequest.status === 200) {
+                dispatch(playlistLoadPlaylists())
                 dispatch(playlistSetSucceed(true))
                 dispatch(playlistClearAddForm())
+                
             }
-        }
 
-        dispatch(playlistSetPreloader(false))
+            dispatch(playlistSetPreloader(false))
+        }
+        
     }
 }
   

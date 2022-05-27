@@ -73,7 +73,7 @@ import {
       const responce = await fetch("/api/devices", {method, body, headers})
   
       if (responce.ok) {
-        deviceLoadDevices()
+        dispatch(deviceLoadDevices())
         dispatch(deviceClearAddForm())
         dispatch(deviceSetSucceed(true))
       }
@@ -127,7 +127,7 @@ export function deviceLoadGroupSchedule(id) {
     const responce = await fetch("/api/devices/playlist/" + id, {method, headers})
 
     const data = await responce.json()
-    if (responce.ok) {
+    if (responce.ok && data) {
       dispatch(deviceSetGroupSchedule(data))
     }
 
@@ -143,9 +143,8 @@ export function deviceDeleteGroupScheduleRecord(idGroup, idSchedule) {
     const headers = {'Content-Type': 'application/json'}
     const responce = await fetch("/api/devices/playlist/" + idGroup + "/" + idSchedule, {method, headers})
 
-    await responce.json()
     if (responce.ok) {
-      deviceLoadGroupSchedule()
+      deviceLoadGroupSchedule(idGroup)
     }
 
     dispatch(deviceSetPreloader(false))
@@ -177,7 +176,7 @@ export function deviceAddGroupScheduleRecord(form) {
     await responce.json()
     if (responce.ok) {
       deviceClearGroupScheduleForm()
-      deviceLoadGroupSchedule()
+      deviceLoadGroupSchedule(form.idDevices)
     }
 
     dispatch(deviceSetPreloader(false))
