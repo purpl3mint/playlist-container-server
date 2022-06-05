@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { playlistDelete } from "../../store/actionCreators/playlistActionCreator"
 
 export const PlaylistCard = (props) => {
-  const {name, id} = props
+  const {name, id, url} = props
   const dispatch = useDispatch()
 
   const deleteHandler = useCallback(() => {
@@ -18,6 +18,7 @@ export const PlaylistCard = (props) => {
           style={{marginBottom: "25px", border: "1px solid grey"}}
         >
             Название медиаплана: {name}<br/>
+            URL: localhost:5000/stat/{url}<br/>
         </div>
       </div>
 

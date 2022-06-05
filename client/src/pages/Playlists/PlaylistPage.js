@@ -12,8 +12,10 @@ export const PlaylistsPage = () => {
     const loading = useSelector(state => state.playlistReducer.preloader)
     const playlists = useSelector(state => {
         const playlistsRaw = state.playlistReducer.playlists
+
+        console.log(playlistsRaw);
         const playlists = playlistsRaw.map(u => 
-          <PlaylistCard name={u.name} id={u.id} key={u.id} />
+          <PlaylistCard name={u.name} id={u.id} url={u.url} key={u.id} />
         )
     
         return playlists
