@@ -2,5 +2,6 @@ node_modules/
 client/node_modules
 client/build
 
-static/
-!static/filler.txt
+#server static
+static
+!static/filler
