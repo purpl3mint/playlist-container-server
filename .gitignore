@@ -4,3 +4,7 @@ client/build
 
 #server static
 static
+
+#server config
+config/default.json
+config/production.json
