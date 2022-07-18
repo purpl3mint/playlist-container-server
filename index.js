@@ -1,3 +1,4 @@
+const fs = require('fs')
 const express = require('express')
 const config = require('config')
 const bcrypt = require('bcrypt')
@@ -9,6 +10,7 @@ const router = require('./routes/index')
 const errorHandler = require('./middleware/errorHandlingMiddleware')
 const path = require('path')
 const { model } = require('./db')
+const e = require('express')
 
 const app = express()
 app.use(cors())
@@ -39,6 +41,19 @@ app.get('/', (req, res) => {
 })
 
 
+const checkStaticDirectory = async () => {
+  const directoryName = 'static/'
+
+  fs.access(directoryName, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.log(`${directoryName} does not exist`);
+      fs.mkdirSync(directoryName)
+    } else {
+      console.log(`${directoryName} exists`);
+    }
+  })
+}
+
 const seed = async () => {
     const { count, rows } = await models.Operator.findAndCountAll()
   
@@ -58,6 +73,7 @@ const start = async () => {
       await sequelize.authenticate()
       await sequelize.sync()
       await seed()
+      await checkStaticDirectory()
       app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (e) {
       console.log(e);
