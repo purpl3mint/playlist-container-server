@@ -1,1 +1,0 @@
-export const PATH = "https://localhost:3000"

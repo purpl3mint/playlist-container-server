@@ -10,6 +10,8 @@ export const PlaylistCard = (props) => {
     dispatch(playlistDelete(id))
   }, [dispatch, id])
 
+  const URL = process.env.REACT_APP_URL || window.location.href;
+
   return (
     <div className="row">
       <div className="col s10">
@@ -18,7 +20,7 @@ export const PlaylistCard = (props) => {
           style={{marginBottom: "25px", border: "1px solid grey"}}
         >
             Название медиаплана: {name}<br/>
-            URL: localhost:5000/stat/{url}<br/>
+            URL: {URL}/stat/{url}<br/>
         </div>
       </div>
 

@@ -3,13 +3,15 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { deviceSetAddForm, deviceAdd } from "../../store/actionCreators/deviceActionCreator"
 import { useMessage } from '../../hooks/message.hook';
-import { PATH } from '../../utils/Config'
 
 export const AddDevice = (props) => {
   const dispatch = useDispatch()
   const message = useMessage()
   const form = useSelector(state => state.deviceReducer.addForm)
-  const basePath = PATH + '/api/show/'
+  const URL = process.env.REACT_APP_URL || window.location.href;
+  const basePath = URL + '/api/show/'
+
+  console.log(URL);
 
   const changeHandler = useCallback( (e) => {
       dispatch(deviceSetAddForm(e.target.name, e.target.value))
